@@ -39,7 +39,6 @@ struct CoinManager {
                     return
                 }
                 if let safeData = data {
-                    let safeDataString = String(data: safeData, encoding: .utf8)
                     let coin = self.parseJSON(safeData)
                     self.delegate?.didUpdateLastPrice(self, price: coin!)
                 }

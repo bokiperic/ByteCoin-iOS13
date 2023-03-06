@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CoinViewController.swift
 //  ByteCoin
 //
 //  Created by Angela Yu on 11/09/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CoinManagerDelegate {
+class CoinViewController: UIViewController {
     
     @IBOutlet weak var bitcoinLabel: UILabel!
     @IBOutlet weak var currencyLabel: UILabel!
@@ -23,6 +23,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
     }
+
+}
+
+// MARK: - UIPickerViewDataSource
+
+extension CoinViewController: UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -32,6 +38,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return coinManager.currencyArray.count
     }
     
+}
+
+// MARK: - UIPickerViewDelegate
+
+extension CoinViewController: UIPickerViewDelegate {
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return coinManager.currencyArray[row]
     }
@@ -40,6 +52,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let selectedCurrency = coinManager.currencyArray[row]
         coinManager.getCoinPrice(for: selectedCurrency)
     }
+    
+}
+
+// MARK: - CoinManagerDelegate
+
+extension CoinViewController: CoinManagerDelegate {
     
     func didUpdateLastPrice(_ coinManager: CoinManager, price: CoinModel) {
         DispatchQueue.main.async {
@@ -51,6 +69,5 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func didFailWithError(error: Error) {
         print(error)
     }
-
+    
 }
-
